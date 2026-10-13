@@ -26,15 +26,15 @@
 #define BUTTON_0_START 0x01U // Confirm the values from my_kobuki
 #define BUTTON_1_STOP 0x02U // Confirm the values from my_kobuki
 #define BUTTON_2_ROTATE 0x04U // Confirm the values from my_kobuki
-#define DRIVE_SPEED_MM_S ((int16_t)1500)
-#define ROTATE_SPEED_MM_S ((int16_t)1500)
+#define DRIVE_SPEED_MM_S   ((int16_t)100)
+#define ROTATE_SPEED_MM_S  ((int16_t)75)
 
-/* Motor speeds in mm / s */
-# define SEARCH_SPEED_MM_S (( int16_t ) 1500)
-# define FORWARD_SPEED_MM_S (( int16_t ) 1500)
-# define REVERSE_SPEED_MM_S (( int16_t ) -1500)
-# define AVOID_SPEED_MM_S (( int16_t ) 1500)
-# define AVOID_DELAY_COUNT 300000U
+// Motor Speed Definitions
+#define SEARCH_SPEED_MM_S  ((int16_t)75)
+#define FORWARD_SPEED_MM_S ((int16_t)100)
+#define REVERSE_SPEED_MM_S ((int16_t)-75)
+#define AVOID_SPEED_MM_S   ((int16_t)75)
+#define AVOID_DELAY_COUNT 300000U
 
 
 typedef enum {
@@ -80,9 +80,9 @@ int main(void)
     while (1) {
         Kobuki_Read(&my_kobuki);
         Ultrasonic_Detect(&ultrasonic_object);
-    /* Button 1 is the global stop command . It has priority over
-    every other state and input . */
-    if ((my_kobuki.button & BUTTON_1_STOP) != 0U) {
+    /* Button 1 is the global stop command . It has priority over every other state and input . */
+    /* Stop when B1 is pressed or either wheel is lifted. */
+    if (((my_kobuki.button & BUTTON_1_STOP) != 0U) || (my_kobuki.wheeldrop != 0U)) {
         state = IDLE;
     }
     else {

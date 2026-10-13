@@ -10,7 +10,7 @@ typedef struct {
     uint8_t button; 
 } Kobuki_Typedef;
 
-#define SPEED_LIMIT (int16_t)(2000)
+#define SPEED_LIMIT (int16_t)(150)
 
 
 // Receive payload

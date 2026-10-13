@@ -23,13 +23,14 @@ void ADC_Init(void)
 
     /* Calibrate ADC1 in single-ended mode. */
     ADC1->CR &= ~ADC_CR_ADCALDIF;
-    ADC1->CR |= ADC_CR_ADCALDIF;
+    ADC1->CR |= ADC_CR_ADCAL;
     while ((ADC1->CR & ADC_CR_ADCAL) != 0U) {
     }
 
     /* Enable ADC1 and wait until it is ready. */
-    ADC1->ISR = ADC_ISR_ADRDY;
-    ADC1->CR |= ADC_ISR_ADRDY;
+    ADC1->ISR = ADC_ISR_ADRDY;       // Clear the ready flag
+    ADC1->CR |= ADC_CR_ADEN;         // Enable the ADC
+
     while ((ADC1->ISR & ADC_ISR_ADRDY) == 0U) {
     }
 }
